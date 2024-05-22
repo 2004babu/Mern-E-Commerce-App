@@ -22,6 +22,7 @@ module.exports = (err, req, res, next) => {
     if (err.name == "ValidationError") {
       message = Object.values(err.errors).map((value) => value.message);
       error = new Error(message);
+      error.statuscode=400
       
     }
     ///////mongoose object id error 
@@ -29,6 +30,7 @@ module.exports = (err, req, res, next) => {
       
       message = `Resuorce Not Found :${err.path}`;
       error = new Error(message);
+      error.statuscode=400
       
     }
   

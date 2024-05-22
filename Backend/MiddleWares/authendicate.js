@@ -3,7 +3,7 @@ const catchAsyncError=require('../MiddleWares/catchAsyncError')
 const ErrorHandler=require('../util/errorHandler')
 const User =require('../model/userModel')
 exports.isAuthendicateUser=catchAsyncError(async(req,res,next)=>{
-    // console.log(req.cookies);
+    
     const { token  }  = req.cookies;
     if (!token) {
     return next(new ErrorHandler('Login First this To Handle .....',401))        
@@ -16,8 +16,7 @@ exports.isAuthendicateUser=catchAsyncError(async(req,res,next)=>{
 })
 
 exports.autherizeRole=(...roles)=>{
-    return(req,res,next)=>{
-        console.log(roles.includes(req.user.role));
+    return(req,res,next)=>{       
         if(!roles.includes(req.user.role)){
             return next(new ErrorHandler(`${req.user.role} not allowed ......only admins Can `,401))
         }

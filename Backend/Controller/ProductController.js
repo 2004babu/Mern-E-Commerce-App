@@ -32,12 +32,8 @@ exports.newProduct = catchAsyncError(async (req, res) => {
 //GET SINGLE PRODUCT -/api/v1/products/:id
 
 exports.getSingleProduct = catchAsyncError(async (req, res, next) => {
-  console.log(req.params.id);
-
-  console.log(!mongoose.Types.ObjectId.isValid(req.params.id));
-  // if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-  //   return next( new ErrorHandler(new Error()))
-  // }
+  
+  
   const singleproduct = await product.findById(req.params.id);
 
   if (!singleproduct) {

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validate = require("validator");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const jsonwebtoken = require("jsonwebtoken");
 const uniqueValidator = require("mongoose-unique-validator");
 
@@ -58,6 +59,20 @@ userSchema.methods.isValidPassword = async function (enteredpassword) {
   // console.log("direct  :",await bcrypt.compare(enteredpassword,enteredpassword))
   return await bcrypt.compare(enteredpassword, this.password);
 };
+userSchema.methods.GetResetToken=async function(next){
+  console.log('GetResetToken');
+  //getnerate Token
+ const token= await crypto.randomBytes(20).toString('hex');
+//  get and set the this.resetPasswordToken
+ this.resetPasswordToken= crypto.createHash('sha256').update(token).digest('hex'); 
+
+ console.log("token  : ",token,"rese: ",this.resetPasswordToken);
+//  set expires  date
+ this.resetPasswordTokenExpire= Date.now() +30*60*1000;
+
+ return token;
+
+}
 
 const user = mongoose.model("user", userSchema);
 module.exports = user;
