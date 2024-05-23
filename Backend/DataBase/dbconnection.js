@@ -9,7 +9,7 @@ const GetDataBase=async()=>{
         const dbUri =process.env.MONGODB_URI;
         await mongoose.connect(dbUri, {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useUnifiedTopology: true,  
           });
         console.log('Database Connected');
       } catch (error) {
