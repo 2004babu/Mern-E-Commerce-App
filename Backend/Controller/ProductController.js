@@ -1,19 +1,37 @@
-const { default: mongoose } = require("mongoose");
 const catchAsyncError = require("../MiddleWares/catchAsyncError");
 const product = require("../model/ProductModel");
 const ErrorHandler = require("../util/errorHandler");
 const APIFeature = require("../util/APIFeatures");
 
 /// get All Products -- /api/v1/products
-exports.getproduct = catchAsyncError(async (req, res) => {
-  const resPerPage=2;
-  const apifeatures= new APIFeature(product.find(),req.query).search().filter().paginate(resPerPage)
+exports.getproduct = catchAsyncError(async (req, res,next) => {
+  const resPerPage=3;
+  // const apifeatures= new APIFeature(product.find(),req.query).search().filter().paginate(resPerPage)
   
-  const AllProducts = await apifeatures.query;
+  const buildQuery=()=>{
+    return new APIFeature(product.find(),req.query).search().filter()
+  }
+
+   let apiFeatures = buildQuery();
+
+   const filteredProductsCount = await apiFeatures.query.countDocuments({});
+  const totalProductsCount = await product.countDocuments({});
+
+  let productsCount = totalProductsCount;
+
+  if (filteredProductsCount !== totalProductsCount) {
+    productsCount = filteredProductsCount;
+  }
+
+  apiFeatures = buildQuery().paginate(resPerPage);
+  const allProducts = await apiFeatures.query;
+  // const AllProducts = await buildQuery().paginate(resPerPage).query;
+  
   res.status(200).json({
     success: true,
-    count: AllProducts.length,
-    AllProducts,
+    count:productsCount,
+    resPerPage,
+    products:allProducts,
   });
 });
 
@@ -41,7 +59,7 @@ exports.getSingleProduct = catchAsyncError(async (req, res, next) => {
   }
   res.status(200).json({
     success: true,
-    singleproduct,
+    product:singleproduct,
   });
 });
 
