@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { getProducts } from "../../actions/productsActions";
+import { getProducts } from "../../actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from ".././layouts/MetaData";
 import Loader from ".././layouts/Loader";
@@ -11,8 +11,7 @@ import { useParams } from "react-router-dom";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import "rc-tooltip/assets/bootstrap.css";
-import Tooltip from "rc-tooltip";
-import { set } from "mongoose";
+
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -47,7 +46,7 @@ const Home = () => {
     if (error) {
       return toast(error);
     }
-    dispatch(getProducts(currentPage, keyword, price, rating, category));
+    dispatch(getProducts(currentPage, keyword, priceChanged, rating, category));
   }, [error, dispatch, priceChanged, currentPage, keyword, category, rating]);
   return (
     <>

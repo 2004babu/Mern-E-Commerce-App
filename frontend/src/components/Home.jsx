@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import {getProducts} from '../actions/productsActions'
+import {getProducts} from '../actions/productActions'
 import {useDispatch, useSelector}from 'react-redux'
 import MetaData from "./layouts/MetaData";
 import Loader from "./layouts/Loader";

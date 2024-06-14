@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProduct } from "../../actions/productActoin";
+import { getProduct } from "../../actions/productActions";
 import "react-toastify/dist/ReactToastify.css";
 import {Carousel} from 'react-bootstrap'
 import MetaData from "../layouts/MetaData";

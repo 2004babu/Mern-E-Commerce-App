@@ -619,3 +619,8 @@ ul.CTAs a {
 body{
   background-color: gray;
 }
+
+
+.whiteColor{
+  color: white !important;
+}

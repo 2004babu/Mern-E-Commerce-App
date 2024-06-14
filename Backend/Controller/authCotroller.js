@@ -12,14 +12,22 @@ const sendEmail = require('../util/email');
 //Register User - /api/v1/register
 
 exports.registerUser=catchAsyncError(async(req,res,next)=>{
-    const{name,email,password,avatar}=req.body
+    const{name,email,password}=req.body
+
+    let avatar;
+
+    if (req.file) {
+        avatar= `${process.env.BACKEND_URL}/uploads/user/${req.file.originalname}`
+    }
     const newuser=await User.create({
         success:true,
         name,
         email,
         password,
         avatar
+       
     });
+    
     newuser.save()
     console.log('fuaygeof');
     sendToken(newuser,201,res)
