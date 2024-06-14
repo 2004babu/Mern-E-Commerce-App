@@ -24,7 +24,7 @@ const Home = () => {
   const [category, setCategory] = useState(null);
   const [rating, setRating] = useState(null);
   const { keyword } = useParams();
-  console.log(keyword);
+  
   const setCurrentPageNO = (pageno) => {
     setCurrentPage(pageno);
   };
